@@ -19,20 +19,10 @@ namespace Com.Rtwsq.Thom.Calculator
         // The 'IExpressionConfig' is what controls what can be done ... so just a few steps away from it being truly pluggable 
         public static void SetExpressionType(ExpressionType expressionType)
         {
-            switch (expressionType)
-            {
-                    case ExpressionType.IntegerBasic:
-                    ExpressionConfig = new IntegerArithmeticBasic();
-                    break;
-                    case ExpressionType.IntegerExtended:
-                    ExpressionConfig = new IntegerAritmeticExtended();
-                    break;
-                default:
-                    throw new InvalidOperationException("Unsupported ExpressionType");
-            }
+            ExpressionConfig = ExpressionConfigs.ConfigForType(expressionType);
         }
 
-
+        public static string AllowedNumberTypes => ExpressionConfig.AllowedNumberTypes;
         public static string AllowedOps => ExpressionConfig.AllowedOperators;
 
         private static IExpressionConfig _expressionConfig;

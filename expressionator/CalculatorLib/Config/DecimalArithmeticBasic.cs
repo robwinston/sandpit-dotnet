@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,22 +12,27 @@ namespace Com.Rtwsq.Thom.Calculator.Config
     /// Configuration for integer arithmetic using unary negative (-), multiplication (*), addition (+), and subtraction (-)
     /// as well as support for arbitarily nested parenthetical expressions
     /// </summary>
-    public  class IntegerArithmeticBasic : IExpressionConfig
+    public  class DecimalArithmeticBasic : IExpressionConfig
     {
-        public string Description => "Integer Basic";
+        public string Description => "Decimal Basic";
         /// <summary>
         /// Character set allowed in expressions - 0-9, +, -, *, ()
         /// </summary>
-        public Regex ValidCharacters { get; } = new Regex(@"^[0-9\+\-\*\(\)\s]+$");
+        public Regex ValidCharacters { get; } = new Regex(@"^[0-9\.\+\-\*\(\)\s]+$");
 
         /// <summary>
-        /// Spots successive numbers missing an operator or parentheses
+        /// Spots numbers with embedded white space
         /// </summary>
-        private Regex EmbeddedWhiteSpace { get; } = new Regex(@"[0-9]+\s+[0-9]+");
-
+        private  Regex EmbeddedWhiteSpace { get; } = new Regex(@"[0-9\.]+\s+[0-9\.]+");
+        private Regex ValidNumericFormat { get; } = new Regex(@"^[0-9]*\.?[0-9]*$");
         public bool NumbersHaveValidFormat(string expression)
         {
-            return EmbeddedWhiteSpace.Matches(expression).Count == 0;
+            if (EmbeddedWhiteSpace.Matches(expression).Count != 0)
+                return false;
+
+            var numerands = ExtractNumerands(expression);
+            var ok = numerands.All(t => ValidNumericFormat.IsMatch(t));
+            return ok;
         }
 
         /// <summary>
@@ -37,22 +43,22 @@ namespace Com.Rtwsq.Thom.Calculator.Config
         /// <summary>
         /// Valid characters in a number - int this case, the digits 0-9
         /// </summary>
-        public Regex Digits { get; } = new Regex("[0-9]+");
+        public Regex Digits { get; } = new Regex(@"[0-9\.]+");
         
         /// <summary>
         /// Anything but 0-9, (, or ) - provides a quick way to extract all operators once and expression has been validated and minified
         /// </summary>
-        public Regex NotDigitsOrParens { get; } = new Regex("[^()0-9]+");
+        public Regex NotDigitsOrParens { get; } = new Regex(@"[^()0-9\.]+");
 
         /// <summary>
         /// Returns the first character of an expression if it neither digits nor parentheses
         /// </summary>
-        public Regex LeadingOperator { get; } = new Regex("^[^()0-9]+");
+        public Regex LeadingOperator { get; } = new Regex(@"^[^()0-9\.]+");
         
         /// <summary>
         /// All valid digits as an array of char
         /// </summary>
-        public char[] DigitChars { get; } = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        public char[] DigitChars { get; } = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
         
         /// <summary>
         /// All valid operators as an array of char
@@ -79,18 +85,18 @@ namespace Com.Rtwsq.Thom.Calculator.Config
         /// </summary>
         public Dictionary<string, Func<string, string, string>> BinaryOperations { get; } = new Dictionary<string, Func<string, string, string>>()
         {
-            {"*", (multiplicand, multiplier) => (int.Parse(multiplier)* int.Parse(multiplicand)).ToString()},
-            {"+", (addend1, addend2) => (int.Parse(addend1) + int.Parse(addend2)).ToString()},
-            {"-", (minuend, subtrahend) => (int.Parse(minuend) - int.Parse(subtrahend)).ToString()},
+            {"*", (multiplicand, multiplier) => (decimal.Parse(multiplier)* decimal.Parse(multiplicand)).ToString(CultureInfo.CurrentCulture)},
+            {"+", (addend1, addend2) => (decimal.Parse(addend1) + decimal.Parse(addend2)).ToString(CultureInfo.CurrentCulture)},
+            {"-", (minuend, subtrahend) => (decimal.Parse(minuend) - decimal.Parse(subtrahend)).ToString(CultureInfo.CurrentCulture)},
 
         };
         
         /// <summary>
-        /// Functions implementing the permitted unary operations (-)
+        /// Functions implementing the permitted unary operations (*, -, +)
         /// </summary>
         public Dictionary<string, Func<string, string>> UnaryOperations { get; } = new Dictionary<string, Func<string, string>>()
         {
-            {"-", (numerand) => (-int.Parse(numerand)).ToString()},
+            {"-", (numerand) => (-decimal.Parse(numerand)).ToString(CultureInfo.CurrentCulture)},
 
         };
 
@@ -131,7 +137,7 @@ namespace Com.Rtwsq.Thom.Calculator.Config
             return Digits.Matches(expression).Cast<Match>().Select(t => t.Value).ToArray();
         }
 
-        public string AllowedNumberTypes => "Integer";
+        public string AllowedNumberTypes => "Decimal";
         private string _allowedOps;
         public  string AllowedOperators
         {
@@ -150,6 +156,5 @@ namespace Com.Rtwsq.Thom.Calculator.Config
                 return _allowedOps;
             }
         }
-
     }
 }

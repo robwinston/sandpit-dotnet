@@ -38,7 +38,8 @@ namespace CalcConsole
                 Console.WriteLine("Select Expression Type:");
                 foreach (KeyValuePair<string, IExpressionConfig> keyValuePair in Choices)
                 {
-                    Console.WriteLine("{0} : {1}", keyValuePair.Key, keyValuePair.Value.AllowedOperators);
+                    IExpressionConfig expressionConfig = keyValuePair.Value;
+                    Console.WriteLine("{0} : {1} ({2}-{3})", keyValuePair.Key, expressionConfig.Description, expressionConfig.AllowedNumberTypes,  expressionConfig.AllowedOperators);
                 }
                 Console.WriteLine("q) Quit");
 
@@ -55,7 +56,9 @@ namespace CalcConsole
             <string, IExpressionConfig>()
         {
             {"1", new IntegerArithmeticBasic()},
-            {"2", new IntegerAritmeticExtended()}
+            {"2", new IntegerAritmeticExtended()},
+            {"3", new DecimalArithmeticBasic()},
+            {"4", new DecimalArithmeticExtended()}
         };
 
         private static string EvaluateExpression(string expression)

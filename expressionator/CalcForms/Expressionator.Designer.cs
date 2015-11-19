@@ -1,6 +1,6 @@
 ﻿namespace CalcForms
 {
-    partial class IntExpression
+    partial class Expressionator
     {
         /// <summary>
         /// Required designer variable.
@@ -39,9 +39,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.grpExpOptions = new System.Windows.Forms.GroupBox();
-            this.rbSimple = new System.Windows.Forms.RadioButton();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtNumsAllowed = new System.Windows.Forms.TextBox();
+            this.rbSimpleDecimal = new System.Windows.Forms.RadioButton();
+            this.txtOpsAllowed = new System.Windows.Forms.TextBox();
             this.rbExtended = new System.Windows.Forms.RadioButton();
-            this.txtWhatsAllowed = new System.Windows.Forms.TextBox();
+            this.rbSimple = new System.Windows.Forms.RadioButton();
+            this.rbExtendedDecimal = new System.Windows.Forms.RadioButton();
             this.grpExpOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,15 +131,77 @@
             // 
             // grpExpOptions
             // 
-            this.grpExpOptions.Controls.Add(this.txtWhatsAllowed);
+            this.grpExpOptions.Controls.Add(this.rbExtendedDecimal);
+            this.grpExpOptions.Controls.Add(this.label5);
+            this.grpExpOptions.Controls.Add(this.label4);
+            this.grpExpOptions.Controls.Add(this.txtNumsAllowed);
+            this.grpExpOptions.Controls.Add(this.rbSimpleDecimal);
+            this.grpExpOptions.Controls.Add(this.txtOpsAllowed);
             this.grpExpOptions.Controls.Add(this.rbExtended);
             this.grpExpOptions.Controls.Add(this.rbSimple);
             this.grpExpOptions.Location = new System.Drawing.Point(534, 33);
             this.grpExpOptions.Name = "grpExpOptions";
-            this.grpExpOptions.Size = new System.Drawing.Size(200, 100);
+            this.grpExpOptions.Size = new System.Drawing.Size(200, 251);
             this.grpExpOptions.TabIndex = 8;
             this.grpExpOptions.TabStop = false;
             this.grpExpOptions.Text = "Supported Expressions";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 190);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Operators";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 143);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Number Type";
+            // 
+            // txtNumsAllowed
+            // 
+            this.txtNumsAllowed.Location = new System.Drawing.Point(6, 163);
+            this.txtNumsAllowed.Name = "txtNumsAllowed";
+            this.txtNumsAllowed.ReadOnly = true;
+            this.txtNumsAllowed.Size = new System.Drawing.Size(175, 20);
+            this.txtNumsAllowed.TabIndex = 9;
+            // 
+            // rbSimpleDecimal
+            // 
+            this.rbSimpleDecimal.AutoSize = true;
+            this.rbSimpleDecimal.Location = new System.Drawing.Point(7, 71);
+            this.rbSimpleDecimal.Name = "rbSimpleDecimal";
+            this.rbSimpleDecimal.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.rbSimpleDecimal.Size = new System.Drawing.Size(97, 17);
+            this.rbSimpleDecimal.TabIndex = 3;
+            this.rbSimpleDecimal.Text = "Decimal Simple";
+            this.rbSimpleDecimal.UseVisualStyleBackColor = true;
+            this.rbSimpleDecimal.CheckedChanged += new System.EventHandler(this.OnExpressionOpts);
+            // 
+            // txtOpsAllowed
+            // 
+            this.txtOpsAllowed.Location = new System.Drawing.Point(6, 210);
+            this.txtOpsAllowed.Name = "txtOpsAllowed";
+            this.txtOpsAllowed.ReadOnly = true;
+            this.txtOpsAllowed.Size = new System.Drawing.Size(175, 20);
+            this.txtOpsAllowed.TabIndex = 2;
+            // 
+            // rbExtended
+            // 
+            this.rbExtended.AutoSize = true;
+            this.rbExtended.Location = new System.Drawing.Point(7, 44);
+            this.rbExtended.Name = "rbExtended";
+            this.rbExtended.Size = new System.Drawing.Size(106, 17);
+            this.rbExtended.TabIndex = 1;
+            this.rbExtended.Text = "Integer Extended";
+            this.rbExtended.UseVisualStyleBackColor = true;
+            this.rbExtended.CheckedChanged += new System.EventHandler(this.OnExpressionOpts);
             // 
             // rbSimple
             // 
@@ -142,33 +209,26 @@
             this.rbSimple.Checked = true;
             this.rbSimple.Location = new System.Drawing.Point(7, 20);
             this.rbSimple.Name = "rbSimple";
-            this.rbSimple.Size = new System.Drawing.Size(56, 17);
+            this.rbSimple.Size = new System.Drawing.Size(92, 17);
             this.rbSimple.TabIndex = 0;
             this.rbSimple.TabStop = true;
-            this.rbSimple.Text = "Simple";
+            this.rbSimple.Text = "Integer Simple";
             this.rbSimple.UseVisualStyleBackColor = true;
             this.rbSimple.CheckedChanged += new System.EventHandler(this.OnExpressionOpts);
             // 
-            // rbExtended
+            // rbExtendedDecimal
             // 
-            this.rbExtended.AutoSize = true;
-            this.rbExtended.Location = new System.Drawing.Point(7, 44);
-            this.rbExtended.Name = "rbExtended";
-            this.rbExtended.Size = new System.Drawing.Size(70, 17);
-            this.rbExtended.TabIndex = 1;
-            this.rbExtended.Text = "Extended";
-            this.rbExtended.UseVisualStyleBackColor = true;
-            this.rbExtended.CheckedChanged += new System.EventHandler(this.OnExpressionOpts);
+            this.rbExtendedDecimal.AutoSize = true;
+            this.rbExtendedDecimal.Location = new System.Drawing.Point(7, 100);
+            this.rbExtendedDecimal.Name = "rbExtendedDecimal";
+            this.rbExtendedDecimal.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.rbExtendedDecimal.Size = new System.Drawing.Size(111, 17);
+            this.rbExtendedDecimal.TabIndex = 12;
+            this.rbExtendedDecimal.Text = "Decimal Extended";
+            this.rbExtendedDecimal.UseVisualStyleBackColor = true;
+            this.rbExtendedDecimal.CheckedChanged += new System.EventHandler(this.OnExpressionOpts);
             // 
-            // txtWhatsAllowed
-            // 
-            this.txtWhatsAllowed.Location = new System.Drawing.Point(7, 67);
-            this.txtWhatsAllowed.Name = "txtWhatsAllowed";
-            this.txtWhatsAllowed.ReadOnly = true;
-            this.txtWhatsAllowed.Size = new System.Drawing.Size(175, 20);
-            this.txtWhatsAllowed.TabIndex = 2;
-            // 
-            // IntExpression
+            // Expressionator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -182,7 +242,7 @@
             this.Controls.Add(this.btnEvaluate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtExpression);
-            this.Name = "IntExpression";
+            this.Name = "Expressionator";
             this.Text = "Simple Expression Calculator";
             this.grpExpOptions.ResumeLayout(false);
             this.grpExpOptions.PerformLayout();
@@ -203,9 +263,14 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.GroupBox grpExpOptions;
-        private System.Windows.Forms.TextBox txtWhatsAllowed;
+        private System.Windows.Forms.TextBox txtOpsAllowed;
         private System.Windows.Forms.RadioButton rbExtended;
         private System.Windows.Forms.RadioButton rbSimple;
+        private System.Windows.Forms.RadioButton rbSimpleDecimal;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtNumsAllowed;
+        private System.Windows.Forms.RadioButton rbExtendedDecimal;
     }
 }
 

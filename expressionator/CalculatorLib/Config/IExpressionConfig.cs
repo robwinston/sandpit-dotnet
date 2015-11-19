@@ -10,8 +10,8 @@ namespace Com.Rtwsq.Thom.Calculator.Config
     /// </summary>
     public interface IExpressionConfig
     {
+        string Description { get; }
         Regex ValidCharacters { get; }
-        Regex BadWhiteSpace { get; }
         Regex InvalidOperatorSequence { get; }
         Regex Digits { get; }
         Regex NotDigitsOrParens { get; }
@@ -28,6 +28,8 @@ namespace Com.Rtwsq.Thom.Calculator.Config
         OpType GetOpType(char c);
         string[] ExtractOperators(string expression );
         string[] ExtractNumerands(string expression);
+        string AllowedNumberTypes { get; }
         string AllowedOperators { get; }
+        bool NumbersHaveValidFormat(string expression);
     }
 }

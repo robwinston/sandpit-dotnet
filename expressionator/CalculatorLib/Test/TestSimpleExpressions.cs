@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Com.Rtwsq.Thom.Calculator.Config;
 using Com.Rtwsq.Thom.Calculator.Validation;
 using Xunit;
 

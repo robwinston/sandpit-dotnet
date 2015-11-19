@@ -59,7 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArithmeticExpression.cs" />
+    <Compile Include="Config\DecimalArithmeticExtended.cs" />
+    <Compile Include="Config\ExpressionConfigs.cs" />
+    <Compile Include="Config\ExpressionType.cs" />
     <Compile Include="Config\IExpressionConfig.cs" />
+    <Compile Include="Config\DecimalArithmeticBasic.cs" />
     <Compile Include="Config\IntegerArithmeticBasic.cs" />
     <Compile Include="Config\IntegerAritmeticExtended.cs" />
     <Compile Include="ExpressionBase.cs" />
@@ -69,7 +73,6 @@
     <Compile Include="IExpressionProcessor.cs" />
     <Compile Include="Test\TestSimpleExpressions.cs" />
     <Compile Include="Validation\CharType.cs" />
-    <Compile Include="Validation\ExpressionType.cs" />
     <Compile Include="Validation\ExpressionValidationResult.cs" />
     <Compile Include="Validation\ExpressionValidator.cs" />
     <Compile Include="Validation\IExpressionValidator.cs" />

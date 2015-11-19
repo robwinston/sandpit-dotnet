@@ -1,18 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using CalcForms.Properties;
 using Com.Rtwsq.Thom.Calculator;
+using Com.Rtwsq.Thom.Calculator.Config;
 using Com.Rtwsq.Thom.Calculator.Validation;
 
 namespace CalcForms
 {
-    public partial class IntExpression : Form
+    public partial class Expressionator : Form
     {
-        public IntExpression()
+        public Expressionator()
         {
             InitializeComponent();
             ArithmeticExpression.SetExpressionType(ExpressionType.IntegerBasic);
-            txtWhatsAllowed.Text = ArithmeticExpression.AllowedOps;
+            txtOpsAllowed.Text = ArithmeticExpression.AllowedOps;
         }
 
         private void OnEvaluate(object sender, EventArgs e)
@@ -53,27 +55,31 @@ namespace CalcForms
             txtExpression.ResetText();
         }
 
+        private readonly Dictionary<string, ExpressionType> _typeOptions = new Dictionary<string, ExpressionType>()
+        {
+            {"rbSimple", ExpressionType.IntegerBasic},
+            {"rbExtended", ExpressionType.IntegerExtended},
+            {"rbSimpleDecimal", ExpressionType.DecimalBasic},
+            {"rbExtendedDecimal", ExpressionType.DecimalExtended}
+        };
+
         private void OnExpressionOpts(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton) sender;
             
             if (rb.Checked)
             {
-                if (rb.Name == "rbSimple")
+                if (_typeOptions.ContainsKey(rb.Name))
                 {
-                    ArithmeticExpression.SetExpressionType(ExpressionType.IntegerBasic);
-                    txtWhatsAllowed.Text = ArithmeticExpression.AllowedOps;
-                }
-                else if (rb.Name == "rbExtended")
-                {
-                    ArithmeticExpression.SetExpressionType(ExpressionType.IntegerExtended);
-                    txtWhatsAllowed.Text = ArithmeticExpression.AllowedOps;
+                    ArithmeticExpression.SetExpressionType(_typeOptions[rb.Name]);
                 }
                 else
                 {
-                    txtWhatsAllowed.Text = @"? (" + rb.Name + @")";
+                    txtOpsAllowed.Text = @"? (" + rb.Name + @")";
                 }
 
+                txtNumsAllowed.Text = ArithmeticExpression.AllowedNumberTypes;
+                txtOpsAllowed.Text = ArithmeticExpression.AllowedOps;
                 txtMessages.ResetText();
                 txtResult.ResetText();
                 

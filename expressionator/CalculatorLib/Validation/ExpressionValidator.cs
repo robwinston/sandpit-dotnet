@@ -21,8 +21,8 @@ namespace Com.Rtwsq.Thom.Calculator.Validation
             "Expression contains one or more invalid characters");
 
             _checkForValidNumbers = new ValidationCheck(
-            expression => _expressionConfig.BadWhiteSpace.Matches(expression).Count == 0,
-            "Expression has numbers with invalid embedded white space");
+            expression => _expressionConfig.NumbersHaveValidFormat(expression),
+            "Expression has numbers with invalid format");
 
             _checkForValidOpSeq = new ValidationCheck(
             expression => _expressionConfig.InvalidOperatorSequence.Matches(expression).Count == 0,
